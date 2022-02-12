@@ -1,0 +1,29 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block content %}
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  <div class="container">
+    <div class="row">
+      <h1>{{tag}}</h1>
+      <br>
+      <h1>{{comment}}</h1>
+      <br>
+      <br>
+      <br>
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for key, value in specs.items() %}
+        <hr>
+        <tr>
+          <td><h1 style="color: gray;">{{key}} - </h1></td> <td><code style="font-size: 20px; font-weight: bold; color: black;"> {{value}}</code></td>
+          </tr>
+        <hr>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+{% include "footer.html" %}
+{% endblock %}
