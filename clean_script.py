@@ -12,7 +12,7 @@ def gome():
     return render_template("index.html")
 
 
-@app.route('/naeb', methods=["GET", "POST"])
+@app.route('/naeb_na_dalari', methods=["GET", "POST"])
 def home():
     link = request.args.get('link')
     soupped = soup_it(link)
@@ -20,7 +20,10 @@ def home():
     comment = auto_ru.get_comment()
     tag = auto_ru.get_tag()
     specs = auto_ru.get_specs()
-    return render_template("car.html", comment=comment, tag=tag, specs=specs)
+    params_second = auto_ru.get_params()
+    images_second = specs[1]
+    images_first = auto_ru.get_images()
+    return render_template("car.html", comment=comment, tag=tag, specs=specs[0], images_s=images_second, params_s=params_second, images_f=images_first)
 
 
 if __name__ == "__main__":

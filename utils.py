@@ -71,7 +71,7 @@ class AutoRu:
         data_clt = {}
         prices = []
         services = []
-
+        images = []
         for result in extract_json_objects(self.data):
             if result.get('owners_number'):
                 data_clt['owners_number'] = result
@@ -88,7 +88,9 @@ class AutoRu:
             if result.get('mileage'):
                 data_clt['mileage'] = result
                 for img in data_clt['mileage']['image_urls']:
-                    img['url'] = img['sizes']['1200x900n'].replace('//', '')
+                    img['url'] = 'https://' + img['sizes']['1200x900n'].replace('//', '')
+                    images.append({'url': img['url'],
+                                  'class': img.get('photo_class')})
                     del img['sizes']
             if result.get('aux'):
                 data_clt['additional_options'] = result
@@ -100,6 +102,6 @@ class AutoRu:
 
         data_clt['prices'] = prices
         data_clt['services'] = services
-        return data_clt
+        return data_clt, images
 
 
