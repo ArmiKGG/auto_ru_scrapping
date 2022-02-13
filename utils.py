@@ -87,6 +87,9 @@ class AutoRu:
                 data_clt['abbr'] = result
             if result.get('mileage'):
                 data_clt['mileage'] = result
+                for img in data_clt['mileage']['image_urls']:
+                    img['url'] = img['sizes']['1200x900n'].replace('//', '')
+                    del img['sizes']
             if result.get('aux'):
                 data_clt['additional_options'] = result
             if result.get('create_timestamp') and result.get('RUR'):
@@ -94,9 +97,6 @@ class AutoRu:
 
             if result.get('latitude') and result.get('longitude'):
                 data_clt['lat_long'] = result
-        for img in data_clt['mileage']['image_urls']:
-            img['url'] = img['sizes']['1200x900n'].replace('//', '')
-            del img['sizes']
 
         data_clt['prices'] = prices
         data_clt['services'] = services
