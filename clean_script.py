@@ -23,7 +23,10 @@ def home():
     params_second = auto_ru.get_params()
     images_second = specs[1]
     images_first = auto_ru.get_images()
-    return render_template("car.html", comment=comment, tag=tag, specs=specs[0], images_s=images_second, params_s=params_second, images_f=images_first)
+    try:
+        return render_template("car.html", comment=comment, tag=tag, specs=specs[0], images_s=images_second, params_s=params_second, images_f=images_first)
+    except Exception as e:
+        return print(f"Lox OSHIBKU POYMAL - {e}")
 
 
 if __name__ == "__main__":
