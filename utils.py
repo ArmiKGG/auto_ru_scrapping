@@ -38,12 +38,16 @@ class AutoRu:
 
     def get_comment(self):
         data = self.soup.find(class_='CardDescriptionHTML')
-        return data.text
+        if data:
+            return data.text
+        return None
 
     def get_images(self):
         data = self.soup.find_all(class_='ImageGalleryDesktop__thumb')
         data = ['https://' + i['src'].replace('//', '').replace('small', '1200x900n') for i in data]
-        return data
+        if data:
+            return data
+        return None
 
     def get_tag(self):
         data = self.soup.find(class_='OfferPriceBadge')
