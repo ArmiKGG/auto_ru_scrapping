@@ -49,6 +49,7 @@ class AutoRu:
         data = self.soup.find(class_='OfferPriceBadge')
         if data:
             return data.text
+        return None
 
     def get_params(self):
         data = self.soup.select('ul.CardInfo li')
