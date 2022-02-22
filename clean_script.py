@@ -1,3 +1,5 @@
+import random
+
 from flask import Flask, render_template, redirect, url_for, flash, abort, request, json
 from flask_bootstrap import Bootstrap
 from utils import *
@@ -7,26 +9,61 @@ app.config['SECRET_KEY'] = 'saasfasfasf'
 Bootstrap(app)
 
 
-@app.route('/')
-def gome():
-    return render_template("index.html")
 
 
-@app.route('/naeb_na_dalari', methods=["GET", "POST"])
+@app.route('/', methods=["GET", "POST"])
 def home():
-    link = request.args.get('link')
-    soupped = soup_it(link)
-    auto_ru = AutoRu(soupped[0], soupped[1])
-    comment = auto_ru.get_comment()
-    tag = auto_ru.get_tag()
-    specs = auto_ru.get_specs()
-    params_second = auto_ru.get_params()
-    images_second = specs[1]
-    images_first = auto_ru.get_images()
+    data = requests.post('https://hotel.dev.expoforum.ru/api/get_guests', params={
+        "hotel_id": "admin"
+    },
+                         headers={
+        'X-API-KEY': 'cboFMpzoOFBmYd9G0RGaLpp35jhi4LKtGedflM1WD5WDWyTceIxJFMxLcbFJtM6y'
+    }).json()
     try:
-        return render_template("car.html", comment=comment, tag=tag, specs=specs[0], images_s=images_second, params_s=params_second, images_f=images_first)
+        return render_template("car.html", data=data)
     except Exception as e:
         return print(f"Lox OSHIBKU POYMAL - {e}")
+
+
+@app.route('/pdf', methods=["GET", "POST"])
+def pdf():
+    if request.method == 'GET':
+        return render_template('pdf.html')
+    req_id = request.form.get('req_id')
+    file = request.files['file']
+    d = requests.post('https://hotel.dev.expoforum.ru/api/update/pdf', data={
+        "req_id": req_id,
+        "new_status": 1
+    },
+                  files={'file_bytes': file}
+                      )
+    return d.json()
+
+
+@app.route('/link', methods=["GET", "POST"])
+def link():
+    if request.method == 'GET':
+        return render_template('link.html')
+    req_id = request.form.get('req_id')
+    link = request.form.get('link')
+    d = requests.post('https://hotel.dev.expoforum.ru/api/update/url', data={
+        "req_id": req_id,
+        "new_status": 1,
+        "link": link,
+    })
+    return d.json()
+
+
+@app.route('/decline', methods=["GET", "POST"])
+def decline():
+    if request.method == 'GET':
+        return render_template('decline.html')
+    req_id = request.form.get('req_id')
+    d = requests.post('https://hotel.dev.expoforum.ru/api/update/decline', data={
+        "req_id": req_id,
+        "new_status": -1,
+    })
+    return d.json()
 
 
 if __name__ == "__main__":

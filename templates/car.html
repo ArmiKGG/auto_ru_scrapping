@@ -12,41 +12,22 @@
       <br>
       <br>
       <br>
-      <div class="col-lg-8 col-md-10 mx-auto">
-        {% for key, value in specs.items() %}
+      {% for d in data%}
+       <div class="col-lg-8 col-md-10 mx-auto">
+         <hr>
+         <tr>
+           <td>{{d}} <br>
+               <button class="button button1"><a href="/pdf">Update PDF</a></button>
+        <button class="button button2"><a href="/link">Update link</a></button>
+        <button class="button button3"><a href="/decline">Update Decline</a></button> </td>
+           </tr>
+         <hr>
+       </div>
         <hr>
-        <tr>
-          <td><h1 style="color: gray;">{{key}}  </h1></td> <td><code style="font-size: 20px; font-weight: bold; color: black;"> {{value}}</code></td>
-          </tr>
         <hr>
-        {% endfor %}
-        <h1>Images First method</h1>
-        {% for value in images_f %}
-            <hr>
-            <tr>
-              <td><h1 style="color: gray;">Image</h1></td> <td><img src="{{value}}" alt="{{value}}"></td>
-              </tr>
-            <hr>
-        {% endfor %}
-        <h1>Images second method</h1>
-        {% for value in images_s %}
-            <hr>
-            <tr>
-              <td><h1 style="color: gray;">Image - {{value['class']}}</h1></td> <td><img src="{{value['url']}}" alt="{{value['url']}}"></td>
-              </tr>
-            <hr>
-        {% endfor %}
-        {% for value in params_s %}
         <hr>
-          {% for key, val in value.items() %}
-            <tr>
-              <td><h1 style="color: gray;">{{key}} - <code style="font-size: 20px; font-weight: bold; color: black;"> {{val}}</code></h1></td>
-            </tr>
-          {% endfor %}
-        <hr>
-        {% endfor %}
+      {% endfor %}
 
-      </div>
     </div>
   </div>
 
